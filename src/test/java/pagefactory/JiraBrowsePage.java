@@ -55,21 +55,80 @@ public class JiraBrowsePage {
         PageFactory.initElements(drive, this);
     }
 
-    public void clickOn(WebElement webElement) {
-        webElement.click();
+    public String getProjectName(){
+        return projectName.getText();
     }
 
-    public void typeInto(WebElement webElement, String inputText) {
-        webElement.sendKeys(inputText);
+    public String getIssueIdentifier(){
+        return issueIdentifier.getText();
     }
 
-    public String getTextOf(WebElement webElement) {
-        return webElement.getText();
+    public String getIssueSummaryValue(){
+        return issueSummaryValue.getText();
     }
 
-    public String getAttributeOf(WebElement webElement, String identifier) {
-        return webElement.getAttribute(identifier);
+    public void clickOnMoreMenuButtonIssue(){
+        moreMenuButtonIssue.click();
     }
 
+    public void clickOnDeleteOption(){
+        deleteOption.click();
+    }
+
+    public void clickOnDeleteButtonConfirmationPopUp(){
+        deleteButtonConfirmationPopUp.click();
+    }
+
+    public void clickOnCancelButtonConfirmationPopUp(){
+        cancelButtonConfirmationPopUp.click();
+    }
+
+    public Boolean isDisplayedCreateSubtask(){
+        return createSubtaskOption.isDisplayed();
+    }
+
+    public void clickOncreateSubtaskOption(){
+        createSubtaskOption.click();
+    }
+
+    public void clickOnSummaryField(){
+        summaryField.click();
+    }
+
+    public void setSummaryFieldContent(String content){
+        summaryField.sendKeys(content);
+    }
+
+    public String getSummaryFieldContent(){
+        return summaryField.getText();
+    }
+
+    public void clickOutOfField(){
+        nonInputSurfaceSubtaskWindow.click();
+    }
+
+    public void clickOnSubtaskCreationSubmit(){
+        subtaskCreationSubmit.click();
+    }
+
+    public void clickOnCancelSubtaskCreation(){
+        cancelSubtaskCreation.click();
+    }
+
+    public void clickOnEditIssueButton(){
+        editIssueButton.click();
+    }
+
+    public Boolean isDisplayedEditIssueButton(){
+        return editIssueButton.isDisplayed();
+    }
+
+    public void clickOnEditIssueSubmit(){
+        editIssueSubmit.click();
+    }
+
+    public Boolean isDisplayedEditIssueSubmit(){
+        return editIssueSubmit.isDisplayed();
+    }
 
 }
