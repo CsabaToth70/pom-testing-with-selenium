@@ -1,5 +1,6 @@
 package pagefactory;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,20 +47,67 @@ public class JiraDashboardPage {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOn(WebElement webElement){
-        webElement.click();
+    public void clickOnCreateButton(){
+        createButton.click();
     }
 
-    public void typeInto(WebElement webElement, String inputText){
-        webElement.sendKeys(inputText);
+    public void clickOnProfileIcon(){
+        profileIcon.click();
     }
 
-    public String getTextOf(WebElement webElement){
-        return webElement.getText();
+    public void clickOnLogout(){
+        logoutOption.click();
     }
 
-    public String getAttributeOf(WebElement webElement, String identifier){
-        return webElement.getAttribute(identifier);
+    public void clickOnProfileOption(){
+        profileOption.click();
     }
+
+    public void clickOnCreateIssueWindow(){
+        createIssueWindow.click();
+    }
+
+    public void clickOnProjectField(){
+        projectField.click();
+    }
+
+    public void clickOnIssueField(){
+        issueField.click();
+    }
+
+    public void setIssueFieldContent(String content){
+        issueField.sendKeys(content);
+    }
+
+    public void pressEnterInIssueField(){
+        issueField.sendKeys(Keys.ENTER);
+    }
+
+    public void clickOnSummaryField(){
+        summaryField.click();
+    }
+
+    public void setSummaryFieldContent(String content){
+        summaryField.sendKeys(content);
+    }
+
+    public void clickOnCreateIssueSubmitButton(){
+        createIssueSubmitButton.click();
+    }
+
+    public void clickOnPopUpNotification(){
+        popUpNotification.click();
+    }
+
+    public void clickOnCancelCreateIssueButton(){
+        cancelButton.click();
+    }
+
+
+
+
+
+
+
 
 }
