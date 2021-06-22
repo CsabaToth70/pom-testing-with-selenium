@@ -64,6 +64,9 @@ public class JiraDashboardPage {
     @FindBy(id="usernameerror")
     WebElement usernameError;
 
+    @FindBy(id="user-options")
+    WebElement navbarLoginBtn;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -73,6 +76,8 @@ public class JiraDashboardPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(profileIcon));
     }
+
+    public void clickOnNavbarLoginBtn() {navbarLoginBtn.click();}
 
     public void clickOnCreateButton(){
         createButton.click();
