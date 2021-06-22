@@ -1,13 +1,17 @@
 package pagefactory;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class JiraBrowsePage {
-    WebDriver drive;
+    WebDriver driver;
 
     WebDriverWait wait;
 
@@ -53,84 +57,89 @@ public class JiraBrowsePage {
     @FindBy(id = "edit-issue-submit")
     WebElement editIssueSubmit;
 
-    public JiraBrowsePage(WebDriver drive) {
-        this.drive = drive;
-        PageFactory.initElements(drive, this);
+    public JiraBrowsePage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    public String getProjectName(){
+    public void waitUntilDeleteButtonConfirmationPopUpClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("Delete")));
+    }
+
+    public String getProjectName() {
         return projectName.getText();
     }
 
-    public String getIssueIdentifier(){
+    public String getIssueIdentifier() {
         return issueIdentifier.getText();
     }
 
-    public String getIssueSummaryValue(){
+    public String getIssueSummaryValue() {
         return issueSummaryValue.getText();
     }
 
-    public void clickOnMoreMenuButtonIssue(){
+    public void clickOnMoreMenuButtonIssue() {
         moreMenuButtonIssue.click();
     }
 
-    public void clickOnDeleteOption(){
+    public void clickOnDeleteOption() {
         deleteOption.click();
     }
 
-    public void clickOnDeleteButtonConfirmationPopUp(){
+    public void clickOnDeleteButtonConfirmationPopUp() {
         deleteButtonConfirmationPopUp.click();
     }
 
-    public void clickOnCancelButtonConfirmationPopUp(){
+    public void clickOnCancelButtonConfirmationPopUp() {
         cancelButtonConfirmationPopUp.click();
     }
 
-    public Boolean isDisplayedCreateSubtask(){
+    public Boolean isDisplayedCreateSubtask() {
         return createSubtaskOption.isDisplayed();
     }
 
-    public void clickOncreateSubtaskOption(){
+    public void clickOnCreateSubtaskOption() {
         createSubtaskOption.click();
     }
 
-    public void clickOnSummaryField(){
+    public void clickOnSummaryField() {
         summaryField.click();
     }
 
-    public void setSummaryFieldContent(String content){
+    public void setSummaryFieldContent(String content) {
         summaryField.sendKeys(content);
     }
 
-    public String getSummaryFieldContent(){
+    public String getSummaryFieldContent() {
         return summaryField.getText();
     }
 
-    public void clickOutOfField(){
+    public void clickOutOfField() {
         nonInputSurfaceSubtaskWindow.click();
     }
 
-    public void clickOnSubtaskCreationSubmit(){
+    public void clickOnSubtaskCreationSubmit() {
         subtaskCreationSubmit.click();
     }
 
-    public void clickOnCancelSubtaskCreation(){
+    public void clickOnCancelSubtaskCreation() {
         cancelSubtaskCreation.click();
     }
 
-    public void clickOnEditIssueButton(){
+    public void clickOnEditIssueButton() {
         editIssueButton.click();
     }
 
-    public Boolean isDisplayedEditIssueButton(){
+    public Boolean isDisplayedEditIssueButton() {
         return editIssueButton.isDisplayed();
     }
 
-    public void clickOnEditIssueSubmit(){
+    public void clickOnEditIssueSubmit() {
         editIssueSubmit.click();
     }
 
-    public Boolean isDisplayedEditIssueSubmit(){
+    public Boolean isDisplayedEditIssueSubmit() {
         return editIssueSubmit.isDisplayed();
     }
 

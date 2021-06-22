@@ -10,47 +10,55 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class JiraDashboardPage {
     WebDriver driver;
 
     WebDriverWait wait;
 
-    @FindBy(id="create_link")
+    @FindBy(id = "create_link")
     WebElement createButton;
 
-    @FindBy(id="header-details-user-fullname")
+    @FindBy(id = "header-details-user-fullname")
     WebElement profileIcon;
 
-    @FindBy(id="header-details-user-fullname")
+    @FindBy(id = "header-details-user-fullname")
     WebElement logoutOption;
 
-    @FindBy(id="view_profile")
+    @FindBy(id = "view_profile")
     WebElement profileOption;
 
-    @FindBy(id="create-issue-dialog")
+    @FindBy(id = "create-issue-dialog")
     WebElement createIssueWindow;
 
-    @FindBy(id="project-field")
+    @FindBy(id = "project-field")
     WebElement projectField;
 
-    @FindBy(id="issuetype-field")
+    @FindBy(id = "issuetype-field")
     WebElement issueField;
 
-    @FindBy(id="summary")
+    @FindBy(id = "summary")
     WebElement summaryField;
 
-    @FindBy(id="create-issue-submit")
+    @FindBy(id = "create-issue-submit")
     WebElement createIssueSubmitButton;
 
-    @FindBy(id="//div[@id='aui-flag-container']/div/div/a")
+    @FindBy(xpath = "//div[@id='aui-flag-container']/div/div/a")
     WebElement popUpNotification;
 
-    @FindBy(xpath="//button[contains(text(),'Cancel')]")
+    @FindBy(xpath = "//button[contains(text(),'Cancel')]")
     WebElement cancelButton;
+
+    @FindBy(xpath = "//body/section[@id='create-issue-dialog']/div[1]")
+    WebElement nonInputSurfaceOfThePage;
+
+    @FindBy(xpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div")
+    WebElement alertSummarySpecification;
 
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
+        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
     }
 
@@ -59,67 +67,107 @@ public class JiraDashboardPage {
         wait.until(ExpectedConditions.elementToBeClickable(profileIcon));
     }
 
-    public void clickOnCreateButton(){
+    public void waitUntilCreateIssueWindowClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("create-issue-dialog")));
+    }
+
+    public void waitUntilIssueFieldClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+    }
+
+    public void waitUntilSummaryFieldClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable((By.id("summary"))));
+    }
+
+    public void waitUntilPopUpNotificationClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='aui-flag-container']/div/div/a")));
+    }
+
+    public void waitUntilProjectFieldClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("project-field")));
+    }
+
+    public void clickOnCreateButton() {
         createButton.click();
     }
 
-    public void clickOnProfileIcon(){
+    public void clickOnProfileIcon() {
         profileIcon.click();
     }
 
-    public void clickOnLogout(){
+    public void clickOnLogout() {
         logoutOption.click();
     }
 
-    public void clickOnProfileOption(){
+    public void clickOnProfileOption() {
         profileOption.click();
     }
 
-    public void clickOnCreateIssueWindow(){
+    public void clickOnCreateIssueWindow() {
         createIssueWindow.click();
     }
 
-    public void clickOnProjectField(){
+    public void clickOnProjectField() {
         projectField.click();
     }
 
-    public void clickOnIssueField(){
+    public void clickOnIssueField() {
         issueField.click();
     }
 
-    public void setIssueFieldContent(String content){
+    public void setIssueFieldContent(String content) {
+
         issueField.sendKeys(content);
     }
 
-    public void pressEnterInIssueField(){
+    public void pressEnterInIssueField() {
         issueField.sendKeys(Keys.ENTER);
     }
 
-    public void clickOnSummaryField(){
+    public void clickOnSummaryField() {
         summaryField.click();
     }
 
-    public void setSummaryFieldContent(String content){
+    public void setSummaryFieldContent(String content) {
         summaryField.sendKeys(content);
     }
 
-    public void clickOnCreateIssueSubmitButton(){
+    public void clickOnCreateIssueSubmitButton() {
         createIssueSubmitButton.click();
     }
 
-    public void clickOnPopUpNotification(){
+    public void clickOnPopUpNotification() {
         popUpNotification.click();
     }
 
-    public void clickOnCancelCreateIssueButton(){
+    public void clickOnCancelCreateIssueButton() {
         cancelButton.click();
     }
 
+    public void setProjectFieldContent(String content) {
+        projectField.sendKeys(content);
+    }
 
+    public void pressEnterInProjectField() {
+        projectField.sendKeys(Keys.ENTER);
+    }
 
+    public void clickOnNonInputSurfaceOfThePage() {
+        nonInputSurfaceOfThePage.click();
+    }
 
+    public String getProjectFieldContent() {
+        return projectField.getAttribute("value");
+    }
 
-
+    public Boolean isDisplayedSummaryAlert() {
+        return alertSummarySpecification.isDisplayed();
+    }
 
 
 }

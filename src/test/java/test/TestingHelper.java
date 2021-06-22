@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pagefactory.JiraDashboardPage;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestingHelper {
     private static final String rootPath = System.getProperty("user.dir") + "/";
@@ -47,5 +50,15 @@ public class TestingHelper {
         driver.findElement(By.id("passwordlabel")).click();
         driver.findElement(By.id("login-form-password")).sendKeys(getProperty("password"));
         driver.findElement(By.id("login")).click();
+    }
+
+    public static void createIssueInAProjectOf(String projectName, JiraDashboardPage objDashboardPage) {
+        objDashboardPage.clickOnCreateButton();
+        objDashboardPage.waitUntilCreateIssueWindowClickable();
+        objDashboardPage.clickOnProjectField();
+        objDashboardPage.setProjectFieldContent(projectName);
+        objDashboardPage.clickOnNonInputSurfaceOfThePage();
+        objDashboardPage.waitUntilSummaryFieldClickable();
+        objDashboardPage.clickOnSummaryField();
     }
 }
