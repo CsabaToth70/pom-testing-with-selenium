@@ -61,6 +61,9 @@ public class JiraDashboardPage {
     @FindBy(id="up-d-username")
     WebElement username;
 
+    @FindBy(id="usernameerror")
+    WebElement usernameError;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -89,6 +92,15 @@ public class JiraDashboardPage {
 
     public String getUsernameText() {
         return username.getText();
+    }
+
+    public void waitUntilUsernameErrorIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(usernameError));
+    }
+
+    public boolean usernameErrorIsDisplayed() {
+        return usernameError.isDisplayed();
     }
 
     public void clickOnLoginBtn() {loginBtn.click();}
