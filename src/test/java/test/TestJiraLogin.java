@@ -39,9 +39,17 @@ public class TestJiraLogin {
     }
 
     @Test
-    void testLoginWithInvalidPassword() throws IOException {
+    void testLoginWithInvalidPasswordDisplaysErrorMessage() throws IOException {
         objDashboardPage.sendKeysToUsernameField(TestingHelper.getProperty("username"));
         objDashboardPage.sendKeysToPasswordField("test");
+        objDashboardPage.clickOnLoginBtn();
+        objDashboardPage.waitUntilUsernameErrorIsVisible();
+        assertTrue(objDashboardPage.usernameErrorIsDisplayed());
+        resetFailedUserLoginCount();
+    }
+
+    @Test
+    void testLoginWithEmptyCredentialsDisplaysErrorMessage() throws IOException {
         objDashboardPage.clickOnLoginBtn();
         objDashboardPage.waitUntilUsernameErrorIsVisible();
         assertTrue(objDashboardPage.usernameErrorIsDisplayed());
