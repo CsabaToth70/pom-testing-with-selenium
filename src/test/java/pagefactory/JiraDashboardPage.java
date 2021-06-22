@@ -49,6 +49,18 @@ public class JiraDashboardPage {
     @FindBy(xpath="//button[contains(text(),'Cancel')]")
     WebElement cancelButton;
 
+    @FindBy(id="login-form-username")
+    WebElement usernameField;
+
+    @FindBy(id="login-form-password")
+    WebElement passwordField;
+
+    @FindBy(id="login")
+    WebElement loginBtn;
+
+    @FindBy(id="up-d-username")
+    WebElement username;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -66,6 +78,20 @@ public class JiraDashboardPage {
     public void clickOnProfileIcon(){
         profileIcon.click();
     }
+
+    public void sendKeysToUsernameField(String input) {
+        usernameField.sendKeys(input);
+    }
+
+    public void sendKeysToPasswordField(String input) {
+        passwordField.sendKeys(input);
+    }
+
+    public String getUsernameText() {
+        return username.getText();
+    }
+
+    public void clickOnLoginBtn() {loginBtn.click();}
 
     public void clickOnLogout(){
         logoutOption.click();
