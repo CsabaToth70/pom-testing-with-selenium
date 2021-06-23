@@ -22,7 +22,7 @@ public class JiraDashboardPage {
     @FindBy(id="header-details-user-fullname")
     WebElement profileIcon;
 
-    @FindBy(id="header-details-user-fullname")
+    @FindBy(id="log_out")
     WebElement logoutOption;
 
     @FindBy(id="view_profile")
