@@ -4,10 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class JiraBrowsePage {
-    WebDriver drive;
+    WebDriver driver;
 
     WebDriverWait wait;
 
@@ -16,6 +20,18 @@ public class JiraBrowsePage {
 
     @FindBy(id = "key-val")
     WebElement issueIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'MTP')]")
+    WebElement mtpProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'COALA')]")
+    WebElement coalaProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'JETI')]")
+    WebElement jetiProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'TOUCAN')]")
+    WebElement toucanProjectIdentifier;
 
     @FindBy(id = "summary-val")
     WebElement issueSummaryValue;
@@ -53,9 +69,9 @@ public class JiraBrowsePage {
     @FindBy(id = "edit-issue-submit")
     WebElement editIssueSubmit;
 
-    public JiraBrowsePage(WebDriver drive) {
-        this.drive = drive;
-        PageFactory.initElements(drive, this);
+    public JiraBrowsePage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
     }
 
     public String getProjectName(){
@@ -134,4 +150,52 @@ public class JiraBrowsePage {
         return editIssueSubmit.isDisplayed();
     }
 
+    public void navigateToProjectSummary(String url) {
+        driver.get(url);
+    }
+
+    void waitUntilProjectIdentifierIsVisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public String getProjectIdentifierText(WebElement element) {
+        return element.getText();
+    }
+
+    public void waitForProjectIdentifierByInput(String project) {
+        switch (project) {
+            case "MTP":
+                waitUntilProjectIdentifierIsVisible(mtpProjectIdentifier);
+                break;
+            case "JETI":
+                waitUntilProjectIdentifierIsVisible(jetiProjectIdentifier);
+                break;
+            case "COALA":
+                waitUntilProjectIdentifierIsVisible(coalaProjectIdentifier);
+                break;
+            case "TOUCAN":
+                waitUntilProjectIdentifierIsVisible(toucanProjectIdentifier);
+                break;
+        }
+    }
+
+    public String getProjectIdentifierTextByInput(String project) {
+        String identifierText = "";
+        switch (project) {
+            case "MTP":
+                identifierText = getProjectIdentifierText(mtpProjectIdentifier);
+                break;
+            case "JETI":
+                identifierText = getProjectIdentifierText(jetiProjectIdentifier);
+                break;
+            case "COALA":
+                identifierText = getProjectIdentifierText(coalaProjectIdentifier);
+                break;
+            case "TOUCAN":
+                identifierText = getProjectIdentifierText(toucanProjectIdentifier);
+                break;
+        }
+        return identifierText;
+    }
 }
