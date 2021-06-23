@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pagefactory.JiraBrowsePage;
 import pagefactory.JiraDashboardPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -65,5 +66,48 @@ public class TestingHelper {
             System.out.println("Timeout error thrown at summary field wait.");
         }
 
+    }
+
+    private static JiraDashboardPage createTestIssue(JiraDashboardPage objDashboardPage, String projectName, String issueName){
+        objDashboardPage.clickOnCreateButton();
+        objDashboardPage.waitUntilCreateIssueWindowClickable();
+        objDashboardPage.clickOnProjectField();
+        objDashboardPage.setProjectFieldContent(projectName);
+
+        try {
+            objDashboardPage.waitForIssueTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
+        objDashboardPage.clickOnNonInputSurfaceOfThePage();
+        objDashboardPage.waitUntilIssueFieldClickable();
+        objDashboardPage.clickOnIssueField();
+        objDashboardPage.selectIssueFieldContent();
+        objDashboardPage.setIssueFieldContent("Bug");
+        objDashboardPage.pressEnterInIssueField();
+
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
+        objDashboardPage.clickOnNonInputSurfaceOfThePage();
+        objDashboardPage.waitUntilSummaryFieldClickable();
+        objDashboardPage.clickOnSummaryField();
+        objDashboardPage.setSummaryFieldContent(issueName);
+        objDashboardPage.clickOnCreateIssueSubmitButton();
+        objDashboardPage.waitUntilPopUpNotificationClickable();
+        return objDashboardPage;
+    }
+
+    private static void deleteTestIssue(JiraDashboardPage objDashboardPage, JiraBrowsePage objBrowsePage,
+                                        String serialNumberOfIssueToDelete){
+        objDashboardPage.setSearchingFieldContent(serialNumberOfIssueToDelete);
+        objDashboardPage.pressEnterInSearchingField();
+        objBrowsePage.waitUntilMoreMenuButtonIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        objBrowsePage.clickOnDeleteOption();
+        objBrowsePage.waitUntilDeleteButtonConfirmationPopUpClickable();
+        objBrowsePage.clickOnDeleteButtonConfirmationPopUp();
     }
 }

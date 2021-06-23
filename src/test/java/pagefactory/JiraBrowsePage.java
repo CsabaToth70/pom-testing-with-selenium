@@ -67,6 +67,11 @@ public class JiraBrowsePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.name("Delete")));
     }
 
+    public void waitUntilMoreMenuButtonIsVisible(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(moreMenuButtonIssue));
+    }
+
     public String getProjectName() {
         return projectName.getText();
     }

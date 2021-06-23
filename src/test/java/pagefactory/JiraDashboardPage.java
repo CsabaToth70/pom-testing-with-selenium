@@ -66,6 +66,9 @@ public class JiraDashboardPage {
     @FindBy(linkText = "Bug")
     WebElement bugNamedOption;
 
+    @FindBy(id="quickSearchInput")
+    WebElement searchingField;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
@@ -264,6 +267,18 @@ public class JiraDashboardPage {
 
     public void clickOnBugOption() {
         bugNamedOption.click();
+    }
+
+    public void clickOnSearchingField(){
+        searchingField.click();
+        }
+
+    public void setSearchingFieldContent(String textContent){
+        searchingField.sendKeys(textContent);
+    }
+
+    public void pressEnterInSearchingField() {
+        searchingField.sendKeys(Keys.ENTER);
     }
 
 }
