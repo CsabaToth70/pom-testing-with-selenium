@@ -36,20 +36,33 @@ public class TestJiraCreateIssue {
     void createIssue() {
         objDashboardPage = new JiraDashboardPage(driver);
         objBrowsePage = new JiraBrowsePage(driver);
+        String projectName = "Main Testing Project (MTP)";
         String issueName = "Test create issue id8";
 
         objDashboardPage.clickOnCreateButton();
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
-        objDashboardPage.setProjectFieldContent("Main Testing Project (MTP)");
+        objDashboardPage.setProjectFieldContent(projectName);
 
+        try {
+            objDashboardPage.waitForIssueTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilIssueFieldClickable();
+        objDashboardPage.clickOnIssueField();
+        objDashboardPage.selectIssueFieldContent();
         objDashboardPage.setIssueFieldContent("Bug");
+        objDashboardPage.pressEnterInIssueField();
 
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
-
         objDashboardPage.clickOnSummaryField();
         objDashboardPage.setSummaryFieldContent(issueName);
         objDashboardPage.clickOnCreateIssueSubmitButton();
@@ -60,6 +73,7 @@ public class TestJiraCreateIssue {
 
         objBrowsePage.clickOnMoreMenuButtonIssue();
         objBrowsePage.clickOnDeleteOption();
+        objBrowsePage.waitUntilDeleteButtonConfirmationPopUpClickable();
         objBrowsePage.clickOnDeleteButtonConfirmationPopUp();
     }
 
@@ -131,6 +145,11 @@ public class TestJiraCreateIssue {
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
 
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();

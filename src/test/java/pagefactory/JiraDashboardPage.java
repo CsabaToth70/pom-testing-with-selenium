@@ -1,16 +1,14 @@
 package pagefactory;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalTime;
 
 public class JiraDashboardPage {
     WebDriver driver;
@@ -56,10 +54,21 @@ public class JiraDashboardPage {
     @FindBy(xpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div")
     WebElement alertSummarySpecification;
 
+    @FindBy(xpath = "//body/div[8]")
+    WebElement projectDropdownMenu;
+
+    @FindBy(css = "#issuetype-single-select > .icon")
+    WebElement dropDownArrow;
+
+    @FindBy(linkText = "Task")
+    WebElement taskNamedOption;
+
+    @FindBy(linkText = "Bug")
+    WebElement bugNamedOption;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
     }
 
     public void waitUntilProfileIsClickable() {
@@ -68,28 +77,96 @@ public class JiraDashboardPage {
     }
 
     public void waitUntilCreateIssueWindowClickable() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("create-issue-dialog")));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(createIssueWindow));
     }
 
     public void waitUntilIssueFieldClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("issuetype-field")));
+        wait.until(ExpectedConditions.elementToBeClickable(issueField));
     }
 
     public void waitUntilSummaryFieldClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable((By.id("summary"))));
+        wait.until(ExpectedConditions.elementToBeClickable(summaryField));
     }
 
     public void waitUntilPopUpNotificationClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='aui-flag-container']/div/div/a")));
+        wait.until(ExpectedConditions.elementToBeClickable(popUpNotification));
     }
 
     public void waitUntilProjectFieldClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("project-field")));
+        wait.until(ExpectedConditions.elementToBeClickable(projectField));
+    }
+
+    public void waitUntilIssuesOptionsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(taskNamedOption));
+
+    }
+
+    public void waitUntilInvisibilityOfIssueField() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.invisibilityOf(issueField));
+    }
+
+    public void waitUntilInvisibilityOfSummaryField() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.invisibilityOf(summaryField));
+    }
+
+    public void waitForIssueTypeFieldToNotExist() {
+        Boolean isExists = true;
+        Boolean isNotExpiredTime = true;
+        int waitedSeconds = 2;
+        LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
+        while (isExists && isNotExpiredTime) {
+            try {
+                driver.findElement(By.id("issuetype-field"));
+            } catch (NoSuchElementException e) {
+                System.out.println("NoSuchElementException thrown from waiting for not issue field being not exist.");
+                waitUntilIssueFieldClickable();
+                isExists = false;
+                break;
+            } catch (StaleElementReferenceException e) {
+                System.out.println("StaleElementReferenceException thrown from waiting for not issue field being not exist.");
+                waitUntilIssueFieldClickable();
+                isExists = false;
+                break;
+            }
+            if (endTime.isBefore(LocalTime.now())) {
+                isNotExpiredTime = false;
+                System.out.println("Waiting for the issue field being not exist ran out of set time limit.");
+            }
+        }
+    }
+
+    public void waitForSummaryTypeFieldToNotExist() {
+        Boolean isExists = true;
+        Boolean isNotExpiredTime = true;
+        int waitedSeconds = 2;
+        LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
+        while (isExists && isNotExpiredTime) {
+            try {
+                driver.findElement(By.id("summary"));
+            } catch (NoSuchElementException e) {
+                System.out.println("NoSuchElementException thrown from waiting for not issue field being not exist.");
+                waitUntilSummaryFieldClickable();
+                isExists = false;
+                break;
+            } catch (StaleElementReferenceException e) {
+                System.out.println("StaleElementReferenceException thrown from waiting for not issue field being not exist.");
+                waitUntilSummaryFieldClickable();
+                isExists = false;
+                break;
+            }
+            if (endTime.isBefore(LocalTime.now())) {
+                isNotExpiredTime = false;
+                System.out.println("Waiting for the issue field being not exist ran out of set time limit.");
+            }
+        }
     }
 
     public void clickOnCreateButton() {
@@ -169,5 +246,24 @@ public class JiraDashboardPage {
         return alertSummarySpecification.isDisplayed();
     }
 
+    public void clearIssueFieldContent() {
+        issueField.clear();
+    }
+
+    public void selectIssueFieldContent() {
+        issueField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+    }
+
+    public void clickOnIssueDropdownArrow() {
+        dropDownArrow.click();
+    }
+
+    public void clickOnTaskOption() {
+        taskNamedOption.click();
+    }
+
+    public void clickOnBugOption() {
+        bugNamedOption.click();
+    }
 
 }

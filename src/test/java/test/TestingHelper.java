@@ -57,8 +57,13 @@ public class TestingHelper {
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
-        objDashboardPage.clickOnNonInputSurfaceOfThePage();
-        objDashboardPage.waitUntilSummaryFieldClickable();
-        objDashboardPage.clickOnSummaryField();
+        try{
+            objDashboardPage.clickOnNonInputSurfaceOfThePage();
+            objDashboardPage.waitUntilSummaryFieldClickable();
+            objDashboardPage.clickOnSummaryField();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at summary field wait.");
+        }
+
     }
 }
