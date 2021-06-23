@@ -49,6 +49,24 @@ public class JiraDashboardPage {
     @FindBy(xpath="//button[contains(text(),'Cancel')]")
     WebElement cancelButton;
 
+    @FindBy(id="login-form-username")
+    WebElement usernameField;
+
+    @FindBy(id="login-form-password")
+    WebElement passwordField;
+
+    @FindBy(id="login")
+    WebElement loginBtn;
+
+    @FindBy(id="up-d-username")
+    WebElement username;
+
+    @FindBy(id="usernameerror")
+    WebElement usernameError;
+
+    @FindBy(id="user-options")
+    WebElement navbarLoginBtn;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -59,6 +77,8 @@ public class JiraDashboardPage {
         wait.until(ExpectedConditions.elementToBeClickable(profileIcon));
     }
 
+    public void clickOnNavbarLoginBtn() {navbarLoginBtn.click();}
+
     public void clickOnCreateButton(){
         createButton.click();
     }
@@ -66,6 +86,29 @@ public class JiraDashboardPage {
     public void clickOnProfileIcon(){
         profileIcon.click();
     }
+
+    public void sendKeysToUsernameField(String input) {
+        usernameField.sendKeys(input);
+    }
+
+    public void sendKeysToPasswordField(String input) {
+        passwordField.sendKeys(input);
+    }
+
+    public String getUsernameText() {
+        return username.getText();
+    }
+
+    public void waitUntilUsernameErrorIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(usernameError));
+    }
+
+    public boolean usernameErrorIsDisplayed() {
+        return usernameError.isDisplayed();
+    }
+
+    public void clickOnLoginBtn() {loginBtn.click();}
 
     public void clickOnLogout(){
         logoutOption.click();
