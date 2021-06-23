@@ -24,7 +24,7 @@ public class JiraLoginPage {
     @FindBy(id="login-form-submit")
     WebElement loginBtn;
 
-    @FindBy(css = ".aui-message.aui-message-error")
+    @FindBy(css=".aui-message.aui-message-error")
     WebElement usernameError;
 
     public JiraLoginPage(WebDriver driver) {
