@@ -54,20 +54,14 @@ public class JiraDashboardPage {
     @FindBy(xpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div")
     WebElement alertSummarySpecification;
 
-    @FindBy(xpath = "//body/div[8]")
-    WebElement projectDropdownMenu;
-
-    @FindBy(css = "#issuetype-single-select > .icon")
-    WebElement dropDownArrow;
-
     @FindBy(linkText = "Task")
     WebElement taskNamedOption;
 
-    @FindBy(linkText = "Bug")
-    WebElement bugNamedOption;
-
-    @FindBy(id="quickSearchInput")
+    @FindBy(id = "quickSearchInput")
     WebElement searchingField;
+
+    @FindBy(xpath="//iframe[@id='gadget-10003']")
+    WebElement yourCompanyTitle;
 
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
@@ -85,18 +79,28 @@ public class JiraDashboardPage {
     }
 
     public void waitUntilIssueFieldClickable() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
         wait.until(ExpectedConditions.elementToBeClickable(issueField));
     }
 
     public void waitUntilSummaryFieldClickable() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
         wait.until(ExpectedConditions.elementToBeClickable(summaryField));
     }
 
     public void waitUntilPopUpNotificationClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(popUpNotification));
+    }
+
+    public void waitUntilSearchingFieldClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(searchingField));
+    }
+
+    public void waitUntilYourCompanyJiraTitleClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(yourCompanyTitle));
     }
 
     public void waitUntilProjectFieldClickable() {
@@ -110,20 +114,10 @@ public class JiraDashboardPage {
 
     }
 
-    public void waitUntilInvisibilityOfIssueField() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.invisibilityOf(issueField));
-    }
-
-    public void waitUntilInvisibilityOfSummaryField() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-        wait.until(ExpectedConditions.invisibilityOf(summaryField));
-    }
-
     public void waitForIssueTypeFieldToNotExist() {
         Boolean isExists = true;
         Boolean isNotExpiredTime = true;
-        int waitedSeconds = 2;
+        int waitedSeconds = 5;
         LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
         while (isExists && isNotExpiredTime) {
             try {
@@ -149,7 +143,7 @@ public class JiraDashboardPage {
     public void waitForSummaryTypeFieldToNotExist() {
         Boolean isExists = true;
         Boolean isNotExpiredTime = true;
-        int waitedSeconds = 2;
+        int waitedSeconds = 5;
         LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
         while (isExists && isNotExpiredTime) {
             try {
@@ -225,7 +219,7 @@ public class JiraDashboardPage {
         popUpNotification.click();
     }
 
-    public String getSerialNumberAttributeIssue(){
+    public String getSerialNumberAttributeIssue() {
         return popUpNotification.getAttribute("data-issue-key");
     }
 
@@ -253,31 +247,15 @@ public class JiraDashboardPage {
         return alertSummarySpecification.isDisplayed();
     }
 
-    public void clearIssueFieldContent() {
-        issueField.clear();
-    }
-
     public void selectIssueFieldContent() {
         issueField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
     }
 
-    public void clickOnIssueDropdownArrow() {
-        dropDownArrow.click();
-    }
-
-    public void clickOnTaskOption() {
-        taskNamedOption.click();
-    }
-
-    public void clickOnBugOption() {
-        bugNamedOption.click();
-    }
-
-    public void clickOnSearchingField(){
+    public void clickOnSearchingField() {
         searchingField.click();
-        }
+    }
 
-    public void setSearchingFieldContent(String textContent){
+    public void setSearchingFieldContent(String textContent) {
         searchingField.sendKeys(textContent);
     }
 

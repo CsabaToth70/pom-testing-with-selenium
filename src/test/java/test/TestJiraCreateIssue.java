@@ -12,8 +12,8 @@ import pagefactory.JiraEmptyPage;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestJiraCreateIssue {
     WebDriver driver;
@@ -111,6 +111,11 @@ public class TestJiraCreateIssue {
         // wait project field - skipped step here
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent("noname");
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -128,6 +133,11 @@ public class TestJiraCreateIssue {
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
 
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -162,21 +172,21 @@ public class TestJiraCreateIssue {
     }
 
     @Test
-    void createSubtaskTest(){
+    void createSubtaskTest() {
         objDashboardPage = new JiraDashboardPage(driver);
         objBrowsePage = new JiraBrowsePage(driver);
         String projectName = "Main Testing Project (MTP)";
         String issueName = "Test create sub-task id:55";
-        String subtaskName= "Test create sub-task id:937";
+        String subtaskName = "Test create sub-task id:937";
         TestingHelper.createTestIssue(objDashboardPage, projectName, issueName);
         String serialNumberOfCreatedTestIssue = objDashboardPage.getSerialNumberAttributeIssue();
 
         driver.get("https://jira-auto.codecool.metastage.net/browse/" + serialNumberOfCreatedTestIssue);
         objBrowsePage.waitUntilIssueNameIsVisible();
         objBrowsePage.clickOnMoreMenuButtonIssue();
-        try{
+        try {
             objBrowsePage.clickOnCreateSubtaskOption();
-        } catch (org.openqa.selenium.NoSuchElementException e){
+        } catch (org.openqa.selenium.NoSuchElementException e) {
             TestingHelper.deleteTestIssue(objDashboardPage, objBrowsePage, serialNumberOfCreatedTestIssue);
             Assert.fail("creation sub-task is not available from the concerned issue of project");
         }
@@ -193,4 +203,65 @@ public class TestJiraCreateIssue {
         TestingHelper.deleteTestIssue(objDashboardPage, objBrowsePage, serialNumberOfCreatedTestIssue);
     }
 
+    @Test
+    void createCOALASubtaskTest() {
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        String serialNumberOfTestIssue = "COALA-18";
+
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        objDashboardPage.setSearchingFieldContent(serialNumberOfTestIssue);
+        objDashboardPage.waitUntilSearchingFieldClickable();
+        objDashboardPage.pressEnterInSearchingField();
+
+        objBrowsePage.waitUntilMoreMenuButtonIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        try {
+            objBrowsePage.clickOnCreateSubtaskOption();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            Assert.fail("creation sub-task is not available from the concerned issue of project");
+        }
+    }
+
+    @Test
+    void createTOUCANSubtaskTest() {
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        String serialNumberOfTestIssue = "TOUCAN-14";
+
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        objDashboardPage.waitUntilSearchingFieldClickable();
+        objDashboardPage.setSearchingFieldContent(serialNumberOfTestIssue);
+        objDashboardPage.waitUntilSearchingFieldClickable();
+        objDashboardPage.pressEnterInSearchingField();
+
+        objBrowsePage.waitUntilMoreMenuButtonIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        try {
+            objBrowsePage.clickOnCreateSubtaskOption();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            Assert.fail("creation sub-task is not available from the concerned issue of project");
+        }
+    }
+
+    @Test
+    void createJETISubtaskTest() {
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        String serialNumberOfTestIssue = "JETI-6";
+
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        objDashboardPage.waitUntilSearchingFieldClickable();
+        objDashboardPage.setSearchingFieldContent(serialNumberOfTestIssue);
+        objDashboardPage.waitUntilSearchingFieldClickable();
+        objDashboardPage.pressEnterInSearchingField();
+
+        objBrowsePage.waitUntilMoreMenuButtonIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        try {
+            objBrowsePage.clickOnCreateSubtaskOption();
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            Assert.fail("creation sub-task is not available from the concerned issue of project");
+        }
+    }
 }
