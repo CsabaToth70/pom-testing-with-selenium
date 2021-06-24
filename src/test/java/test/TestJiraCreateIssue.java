@@ -1,5 +1,6 @@
 package test;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import pagefactory.JiraEmptyPage;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestJiraCreateIssue {
     WebDriver driver;
@@ -159,5 +161,36 @@ public class TestJiraCreateIssue {
         assertTrue(objEmptyPage.isDisplayedNoIssuesWereFound());
     }
 
+    @Test
+    void createSubtaskTest(){
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        String projectName = "Main Testing Project (MTP)";
+        String issueName = "Test create sub-task id:55";
+        String subtaskName= "Test create sub-task id:937";
+        TestingHelper.createTestIssue(objDashboardPage, projectName, issueName);
+        String serialNumberOfCreatedTestIssue = objDashboardPage.getSerialNumberAttributeIssue();
+
+        driver.get("https://jira-auto.codecool.metastage.net/browse/" + serialNumberOfCreatedTestIssue);
+        objBrowsePage.waitUntilIssueNameIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        try{
+            objBrowsePage.clickOnCreateSubtaskOption();
+        } catch (org.openqa.selenium.NoSuchElementException e){
+            TestingHelper.deleteTestIssue(objDashboardPage, objBrowsePage, serialNumberOfCreatedTestIssue);
+            Assert.fail("creation sub-task is not available from the concerned issue of project");
+        }
+        objBrowsePage.waitUntilSummaryFieldOfPopupWindowIsClickable();
+        objBrowsePage.clickOnSummaryField();
+        objBrowsePage.setSummaryFieldContent(subtaskName);
+        objBrowsePage.clickOnNonInputSurfaceSubtaskWindow();
+        objBrowsePage.clickOnSubtaskCreationSubmit();
+        objBrowsePage.waitUntilTestCreatedSubtaskLinkByNameIsClickable();
+        objBrowsePage.clickOnTestCreatedSubtaskLinkByName();
+        objBrowsePage.waitUntilIssueNameInTopOfSubtaskWindowIsClickable();
+        assertEquals(subtaskName, objBrowsePage.getIssueSummaryValue());
+
+        TestingHelper.deleteTestIssue(objDashboardPage, objBrowsePage, serialNumberOfCreatedTestIssue);
+    }
 
 }

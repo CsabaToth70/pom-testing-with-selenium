@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -57,9 +58,18 @@ public class JiraBrowsePage {
     @FindBy(id = "edit-issue-submit")
     WebElement editIssueSubmit;
 
+    @FindBy(linkText = "Test create sub-task id:937")
+    WebElement createdSubtaskName;
+
+    @FindBy(xpath="//a[contains(text(),\'Test create sub-task id:937\')]")
+    WebElement testCreatedSubtaskLinkByName;
+
+    @FindBy(xpath = "//a[@id='parent_issue_summary']")
+    WebElement issueNameInTopOfSubtaskWindow;
+
     public JiraBrowsePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
     }
 
     public void waitUntilDeleteButtonConfirmationPopUpClickable() {
@@ -72,6 +82,26 @@ public class JiraBrowsePage {
         wait.until(ExpectedConditions.visibilityOf(moreMenuButtonIssue));
     }
 
+    public void waitUntilSummaryFieldOfPopupWindowIsClickable(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(summaryField));
+    }
+
+    public void waitUntilCreatedSubtaskNameIsClickable(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(createdSubtaskName));
+    }
+
+    public void waitUntilIssueNameInTopOfSubtaskWindowIsClickable(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(issueNameInTopOfSubtaskWindow));
+    }
+
+    public void waitUntilTestCreatedSubtaskLinkByNameIsClickable(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(testCreatedSubtaskLinkByName));
+    }
+
     public String getProjectName() {
         return projectName.getText();
     }
@@ -82,6 +112,11 @@ public class JiraBrowsePage {
 
     public String getIssueSummaryValue() {
         return issueSummaryValue.getText();
+    }
+
+    public void waitUntilIssueNameIsVisible(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(issueSummaryValue));
     }
 
     public void clickOnMoreMenuButtonIssue() {
@@ -148,4 +183,11 @@ public class JiraBrowsePage {
         return editIssueSubmit.isDisplayed();
     }
 
+    public void clickOnNonInputSurfaceSubtaskWindow(){
+        nonInputSurfaceSubtaskWindow.click();
+    }
+
+    public void clickOnTestCreatedSubtaskLinkByName(){
+        testCreatedSubtaskLinkByName.click();
+    }
 }

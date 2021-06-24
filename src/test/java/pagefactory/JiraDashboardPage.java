@@ -225,6 +225,10 @@ public class JiraDashboardPage {
         popUpNotification.click();
     }
 
+    public String getSerialNumberAttributeIssue(){
+        return popUpNotification.getAttribute("data-issue-key");
+    }
+
     public void clickOnCancelCreateIssueButton() {
         cancelButton.click();
     }

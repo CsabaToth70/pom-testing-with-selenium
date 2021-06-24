@@ -4,11 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pagefactory.JiraBrowsePage;
 import pagefactory.JiraDashboardPage;
 
@@ -68,7 +65,7 @@ public class TestingHelper {
 
     }
 
-    private static JiraDashboardPage createTestIssue(JiraDashboardPage objDashboardPage, String projectName, String issueName){
+    public static void createTestIssue(JiraDashboardPage objDashboardPage, String projectName, String issueName){
         objDashboardPage.clickOnCreateButton();
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
@@ -97,10 +94,9 @@ public class TestingHelper {
         objDashboardPage.setSummaryFieldContent(issueName);
         objDashboardPage.clickOnCreateIssueSubmitButton();
         objDashboardPage.waitUntilPopUpNotificationClickable();
-        return objDashboardPage;
     }
 
-    private static void deleteTestIssue(JiraDashboardPage objDashboardPage, JiraBrowsePage objBrowsePage,
+    public static void deleteTestIssue(JiraDashboardPage objDashboardPage, JiraBrowsePage objBrowsePage,
                                         String serialNumberOfIssueToDelete){
         objDashboardPage.setSearchingFieldContent(serialNumberOfIssueToDelete);
         objDashboardPage.pressEnterInSearchingField();
