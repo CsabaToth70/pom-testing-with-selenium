@@ -149,12 +149,12 @@ public class JiraDashboardPage {
             try {
                 driver.findElement(By.id("issuetype-field"));
             } catch (NoSuchElementException e) {
-                System.out.println("NoSuchElementException thrown from waiting for not issue field being not exist.");
+                System.out.println("NoSuchElementException thrown from waiting for issue field being not exist.");
                 waitUntilIssueFieldClickable();
                 isExists = false;
                 break;
             } catch (StaleElementReferenceException e) {
-                System.out.println("StaleElementReferenceException thrown from waiting for not issue field being not exist.");
+                System.out.println("StaleElementReferenceException thrown from waiting for issue field being not exist.");
                 waitUntilIssueFieldClickable();
                 isExists = false;
                 break;
@@ -175,19 +175,19 @@ public class JiraDashboardPage {
             try {
                 driver.findElement(By.id("summary"));
             } catch (NoSuchElementException e) {
-                System.out.println("NoSuchElementException thrown from waiting for not issue field being not exist.");
+                System.out.println("NoSuchElementException thrown from waiting for summary field being not exist.");
                 waitUntilSummaryFieldClickable();
                 isExists = false;
                 break;
             } catch (StaleElementReferenceException e) {
-                System.out.println("StaleElementReferenceException thrown from waiting for not issue field being not exist.");
+                System.out.println("StaleElementReferenceException thrown from waiting for summary field being not exist.");
                 waitUntilSummaryFieldClickable();
                 isExists = false;
                 break;
             }
             if (endTime.isBefore(LocalTime.now())) {
                 isNotExpiredTime = false;
-                System.out.println("Waiting for the issue field being not exist ran out of set time limit.");
+                System.out.println("Waiting for the summary field being not exist ran out of set time limit.");
             }
         }
     }
