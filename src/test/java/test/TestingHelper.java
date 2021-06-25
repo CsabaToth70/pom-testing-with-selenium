@@ -1,14 +1,13 @@
 package test;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import pagefactory.JiraBrowsePage;
+import pagefactory.JiraDashboardPage;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TestingHelper {
     private static final String rootPath = System.getProperty("user.dir") + "/";
@@ -41,11 +40,68 @@ public class TestingHelper {
         driver.get("https://jira-auto.codecool.metastage.net/");
     }
 
-    private static void login(WebDriver driver) throws IOException {
+    static void login(WebDriver driver) throws IOException {
         driver.findElement(By.id("login-form-username")).click();
         driver.findElement(By.id("login-form-username")).sendKeys(getProperty("username"));
         driver.findElement(By.id("passwordlabel")).click();
         driver.findElement(By.id("login-form-password")).sendKeys(getProperty("password"));
         driver.findElement(By.id("login")).click();
+    }
+
+    public static void createIssueInAProjectOf(String projectName, JiraDashboardPage objDashboardPage) {
+        objDashboardPage.clickOnCreateButton();
+        objDashboardPage.waitUntilCreateIssueWindowClickable();
+        objDashboardPage.clickOnProjectField();
+        objDashboardPage.setProjectFieldContent(projectName);
+        try {
+            objDashboardPage.clickOnNonInputSurfaceOfThePage();
+            objDashboardPage.waitUntilSummaryFieldClickable();
+            objDashboardPage.clickOnSummaryField();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at summary field wait.");
+        }
+
+    }
+
+    public static void createTestIssue(JiraDashboardPage objDashboardPage, String projectName, String issueName) {
+        objDashboardPage.clickOnCreateButton();
+        objDashboardPage.waitUntilCreateIssueWindowClickable();
+        objDashboardPage.clickOnProjectField();
+        objDashboardPage.setProjectFieldContent(projectName);
+
+        try {
+            objDashboardPage.waitForIssueTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
+        objDashboardPage.clickOnNonInputSurfaceOfThePage();
+        objDashboardPage.waitUntilIssueFieldClickable();
+        objDashboardPage.clickOnIssueField();
+        objDashboardPage.selectIssueFieldContent();
+        objDashboardPage.setIssueFieldContent("Bug");
+        objDashboardPage.pressEnterInIssueField();
+
+        try {
+            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+        } catch (Exception e) {
+            System.out.println("Timeout error thrown at issue field wait.");
+        }
+        objDashboardPage.clickOnNonInputSurfaceOfThePage();
+        objDashboardPage.waitUntilSummaryFieldClickable();
+        objDashboardPage.clickOnSummaryField();
+        objDashboardPage.setSummaryFieldContent(issueName);
+        objDashboardPage.clickOnCreateIssueSubmitButton();
+        objDashboardPage.waitUntilPopUpNotificationClickable();
+    }
+
+    public static void deleteTestIssue(JiraDashboardPage objDashboardPage, JiraBrowsePage objBrowsePage,
+                                       String serialNumberOfIssueToDelete) {
+        objDashboardPage.setSearchingFieldContent(serialNumberOfIssueToDelete);
+        objDashboardPage.pressEnterInSearchingField();
+        objBrowsePage.waitUntilMoreMenuButtonIsVisible();
+        objBrowsePage.clickOnMoreMenuButtonIssue();
+        objBrowsePage.clickOnDeleteOption();
+        objBrowsePage.waitUntilDeleteButtonConfirmationPopUpClickable();
+        objBrowsePage.clickOnDeleteButtonConfirmationPopUp();
     }
 }

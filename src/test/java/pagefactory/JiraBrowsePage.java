@@ -1,5 +1,6 @@
 package pagefactory;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -69,85 +70,151 @@ public class JiraBrowsePage {
     @FindBy(id = "edit-issue-submit")
     WebElement editIssueSubmit;
 
+    @FindBy(linkText = "Test create sub-task id:937")
+    WebElement createdSubtaskName;
+
+    @FindBy(xpath = "//a[contains(text(),\'Test create sub-task id:937\')]")
+    WebElement testCreatedSubtaskLinkByName;
+
+    @FindBy(xpath = "//a[@id='parent_issue_summary']")
+    WebElement issueNameInTopOfSubtaskWindow;
+
+    @FindBy(xpath = "xpath=//section[@id='sidebar']/div/div/div/div/div[2]/h1/div/div/a")
+    WebElement projectNameInSidebar;
+
     public JiraBrowsePage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
     }
 
-    public String getProjectName(){
+    public void waitUntilDeleteButtonConfirmationPopUpClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.name("Delete")));
+    }
+
+    public void waitUntilMoreMenuButtonIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(moreMenuButtonIssue));
+    }
+
+    public void waitUntilSummaryFieldOfPopupWindowIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(summaryField));
+    }
+
+    public void waitUntilCreatedSubtaskNameIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(createdSubtaskName));
+    }
+
+    public void waitUntilIssueNameInTopOfSubtaskWindowIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(issueNameInTopOfSubtaskWindow));
+
+    }
+
+    public void waitUntilTestCreatedSubtaskLinkByNameIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(testCreatedSubtaskLinkByName));
+    }
+
+    public void waitUntilMoreMenuButtonIssueIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(moreMenuButtonIssue));
+    }
+
+    public void waitUntilProjectNameInSidebarIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(projectNameInSidebar));
+    }
+
+    public String getProjectName() {
         return projectName.getText();
     }
 
-    public String getIssueIdentifier(){
+    public String getIssueIdentifier() {
         return issueIdentifier.getText();
     }
 
-    public String getIssueSummaryValue(){
+    public String getIssueSummaryValue() {
         return issueSummaryValue.getText();
     }
 
-    public void clickOnMoreMenuButtonIssue(){
+    public void waitUntilIssueNameIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.visibilityOf(issueSummaryValue));
+    }
+
+    public void clickOnMoreMenuButtonIssue() {
         moreMenuButtonIssue.click();
     }
 
-    public void clickOnDeleteOption(){
+    public void clickOnDeleteOption() {
         deleteOption.click();
     }
 
-    public void clickOnDeleteButtonConfirmationPopUp(){
+    public void clickOnDeleteButtonConfirmationPopUp() {
         deleteButtonConfirmationPopUp.click();
     }
 
-    public void clickOnCancelButtonConfirmationPopUp(){
+    public void clickOnCancelButtonConfirmationPopUp() {
         cancelButtonConfirmationPopUp.click();
     }
 
-    public Boolean isDisplayedCreateSubtask(){
+    public Boolean isDisplayedCreateSubtask() {
         return createSubtaskOption.isDisplayed();
     }
 
-    public void clickOncreateSubtaskOption(){
+    public void clickOnCreateSubtaskOption() {
         createSubtaskOption.click();
     }
 
-    public void clickOnSummaryField(){
+    public void clickOnSummaryField() {
         summaryField.click();
     }
 
-    public void setSummaryFieldContent(String content){
+    public void setSummaryFieldContent(String content) {
         summaryField.sendKeys(content);
     }
 
-    public String getSummaryFieldContent(){
+    public String getSummaryFieldContent() {
         return summaryField.getText();
     }
 
-    public void clickOutOfField(){
+    public void clickOutOfField() {
         nonInputSurfaceSubtaskWindow.click();
     }
 
-    public void clickOnSubtaskCreationSubmit(){
+    public void clickOnSubtaskCreationSubmit() {
         subtaskCreationSubmit.click();
     }
 
-    public void clickOnCancelSubtaskCreation(){
+    public void clickOnCancelSubtaskCreation() {
         cancelSubtaskCreation.click();
     }
 
-    public void clickOnEditIssueButton(){
+    public void clickOnEditIssueButton() {
         editIssueButton.click();
     }
 
-    public Boolean isDisplayedEditIssueButton(){
+    public Boolean isDisplayedEditIssueButton() {
         return editIssueButton.isDisplayed();
     }
 
-    public void clickOnEditIssueSubmit(){
+    public void clickOnEditIssueSubmit() {
         editIssueSubmit.click();
     }
 
-    public Boolean isDisplayedEditIssueSubmit(){
+    public Boolean isDisplayedEditIssueSubmit() {
         return editIssueSubmit.isDisplayed();
+    }
+
+    public void clickOnNonInputSurfaceSubtaskWindow() {
+        nonInputSurfaceSubtaskWindow.click();
+    }
+
+    public void clickOnTestCreatedSubtaskLinkByName() {
+        testCreatedSubtaskLinkByName.click();
     }
 
     public void navigateToProjectSummary(String url) {
