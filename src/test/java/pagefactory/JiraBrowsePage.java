@@ -22,6 +22,18 @@ public class JiraBrowsePage {
     @FindBy(id = "key-val")
     WebElement issueIdentifier;
 
+    @FindBy(xpath = "//dd[contains(text(),'MTP')]")
+    WebElement mtpProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'COALA')]")
+    WebElement coalaProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'JETI')]")
+    WebElement jetiProjectIdentifier;
+
+    @FindBy(xpath = "//dd[contains(text(),'TOUCAN')]")
+    WebElement toucanProjectIdentifier;
+
     @FindBy(id = "summary-val")
     WebElement issueSummaryValue;
 
@@ -98,6 +110,7 @@ public class JiraBrowsePage {
     public void waitUntilIssueNameInTopOfSubtaskWindowIsClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(issueNameInTopOfSubtaskWindow));
+
     }
 
     public void waitUntilTestCreatedSubtaskLinkByNameIsClickable() {
@@ -204,5 +217,52 @@ public class JiraBrowsePage {
         testCreatedSubtaskLinkByName.click();
     }
 
+    public void navigateToProjectSummary(String url) {
+        driver.get(url);
+    }
 
+    void waitUntilProjectIdentifierIsVisible(WebElement element) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public String getProjectIdentifierText(WebElement element) {
+        return element.getText();
+    }
+
+    public void waitForProjectIdentifierByInput(String project) {
+        switch (project) {
+            case "MTP":
+                waitUntilProjectIdentifierIsVisible(mtpProjectIdentifier);
+                break;
+            case "JETI":
+                waitUntilProjectIdentifierIsVisible(jetiProjectIdentifier);
+                break;
+            case "COALA":
+                waitUntilProjectIdentifierIsVisible(coalaProjectIdentifier);
+                break;
+            case "TOUCAN":
+                waitUntilProjectIdentifierIsVisible(toucanProjectIdentifier);
+                break;
+        }
+    }
+
+    public String getProjectIdentifierTextByInput(String project) {
+        String identifierText = "";
+        switch (project) {
+            case "MTP":
+                identifierText = getProjectIdentifierText(mtpProjectIdentifier);
+                break;
+            case "JETI":
+                identifierText = getProjectIdentifierText(jetiProjectIdentifier);
+                break;
+            case "COALA":
+                identifierText = getProjectIdentifierText(coalaProjectIdentifier);
+                break;
+            case "TOUCAN":
+                identifierText = getProjectIdentifierText(toucanProjectIdentifier);
+                break;
+        }
+        return identifierText;
+    }
 }

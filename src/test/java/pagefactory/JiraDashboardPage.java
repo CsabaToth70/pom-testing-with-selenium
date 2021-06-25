@@ -21,7 +21,7 @@ public class JiraDashboardPage {
     @FindBy(id = "header-details-user-fullname")
     WebElement profileIcon;
 
-    @FindBy(id = "header-details-user-fullname")
+    @FindBy(id="log_out")
     WebElement logoutOption;
 
     @FindBy(id = "view_profile")
@@ -48,6 +48,7 @@ public class JiraDashboardPage {
     @FindBy(xpath = "//button[contains(text(),'Cancel')]")
     WebElement cancelButton;
 
+
     @FindBy(xpath = "//body/section[@id='create-issue-dialog']/div[1]")
     WebElement nonInputSurfaceOfThePage;
 
@@ -63,6 +64,30 @@ public class JiraDashboardPage {
     @FindBy(xpath="//iframe[@id='gadget-10003']")
     WebElement yourCompanyTitle;
 
+    @FindBy(id="login-form-username")
+    WebElement usernameField;
+
+    @FindBy(id="login-form-password")
+    WebElement passwordField;
+
+    @FindBy(id="login")
+    WebElement loginBtn;
+
+    @FindBy(id="up-d-username")
+    WebElement username;
+
+    @FindBy(id="usernameerror")
+    WebElement usernameError;
+
+    @FindBy(id="user-options")
+    WebElement navbarLoginBtn;
+
+    @FindBy(id = "browse_link")
+    WebElement projectsNavbarDropdown;
+
+    @FindBy(id = "project_view_all_link_lnk")
+    WebElement viewAllProjectsLink;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
@@ -72,6 +97,7 @@ public class JiraDashboardPage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(profileIcon));
     }
+
 
     public void waitUntilCreateIssueWindowClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(8));
@@ -166,7 +192,9 @@ public class JiraDashboardPage {
         }
     }
 
-    public void clickOnCreateButton() {
+    public void clickOnNavbarLoginBtn() {navbarLoginBtn.click();}
+
+    public void clickOnCreateButton(){
         createButton.click();
     }
 
@@ -174,7 +202,30 @@ public class JiraDashboardPage {
         profileIcon.click();
     }
 
-    public void clickOnLogout() {
+    public void sendKeysToUsernameField(String input) {
+        usernameField.sendKeys(input);
+    }
+
+    public void sendKeysToPasswordField(String input) {
+        passwordField.sendKeys(input);
+    }
+
+    public String getUsernameText() {
+        return username.getText();
+    }
+
+    public void waitUntilUsernameErrorIsVisible() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.visibilityOf(usernameError));
+    }
+
+    public boolean usernameErrorIsDisplayed() {
+        return usernameError.isDisplayed();
+    }
+
+    public void clickOnLoginBtn() {loginBtn.click();}
+
+    public void clickOnLogout(){
         logoutOption.click();
     }
 
@@ -263,4 +314,16 @@ public class JiraDashboardPage {
         searchingField.sendKeys(Keys.ENTER);
     }
 
+    public void waitUntilProjectsNavbarIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(projectsNavbarDropdown));
+    }
+
+    public void clickOnProjectsNavbarDropdown() {
+        projectsNavbarDropdown.click();
+    }
+
+    public void clickOnViewAllProjectsLink() {
+        viewAllProjectsLink.click();
+    }
 }
