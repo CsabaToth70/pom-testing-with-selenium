@@ -198,7 +198,7 @@ public class JiraBrowsePage {
         return projectName.getText();
     }
 
-    public String getIssueIdentifier() {
+    public String getIssueIdentifierText() {
         return issueIdentifier.getText();
     }
 
@@ -288,6 +288,10 @@ public class JiraBrowsePage {
     }
 
     public void navigateToProjectSummary(String url) {
+        driver.get(url);
+    }
+
+    public void navigateToIssue(String url) {
         driver.get(url);
     }
 
