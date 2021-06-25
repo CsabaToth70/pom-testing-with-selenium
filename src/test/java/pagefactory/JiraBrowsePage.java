@@ -1,8 +1,6 @@
 package pagefactory;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -10,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.time.LocalTime;
 
 public class JiraBrowsePage {
     WebDriver driver;
@@ -58,6 +57,9 @@ public class JiraBrowsePage {
     @FindBy(css = ".content > .field-group:nth-child(1)")
     WebElement nonInputSurfaceSubtaskWindow;
 
+    @FindBy(xpath = "//body/section[@id='edit-issue-dialog']/div[1]")
+    WebElement nonInputSurfaceIssueWindow;
+
     @FindBy(id = "create-issue-submit")
     WebElement subtaskCreationSubmit;
 
@@ -82,6 +84,12 @@ public class JiraBrowsePage {
     @FindBy(xpath = "xpath=//section[@id='sidebar']/div/div/div/div/div[2]/h1/div/div/a")
     WebElement projectNameInSidebar;
 
+    @FindBy(xpath = "//span[contains(text(),'Issues')]")
+    WebElement issuesSidebarText;
+
+    @FindBy(xpath = "//input[@id='issuetype-field']")
+    WebElement issueTypeField;
+
     public JiraBrowsePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 5), this);
@@ -97,14 +105,32 @@ public class JiraBrowsePage {
         wait.until(ExpectedConditions.visibilityOf(moreMenuButtonIssue));
     }
 
+    public void waitUntilIssueSummaryValueIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(issueSummaryValue));
+    }
+
     public void waitUntilSummaryFieldOfPopupWindowIsClickable() {
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
         wait.until(ExpectedConditions.elementToBeClickable(summaryField));
+    }
+
+    public void clearSummaryFieldContent(){
+        summaryField.clear();
+    }
+
+    public void setSelectionOfSummaryFieldContent(){
+        summaryField.sendKeys(Keys.CONTROL, "a");
     }
 
     public void waitUntilCreatedSubtaskNameIsClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(createdSubtaskName));
+    }
+
+    public void waitUntilIssuesSidebarTextIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(issuesSidebarText));
     }
 
     public void waitUntilIssueNameInTopOfSubtaskWindowIsClickable() {
@@ -116,6 +142,46 @@ public class JiraBrowsePage {
     public void waitUntilTestCreatedSubtaskLinkByNameIsClickable() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(testCreatedSubtaskLinkByName));
+    }
+
+    public void waitUntilIssueTypeFieldIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(issueTypeField));
+    }
+
+    public void waitUntilEditIssueSubmitIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(8));
+        wait.until(ExpectedConditions.elementToBeClickable(editIssueSubmit));
+    }
+
+    public void waitUntilEditIssueSubmitBeNotClickable() {
+        Boolean isExists = true;
+        Boolean isNotExpiredTime = true;
+        int waitedSeconds = 5;
+        LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
+        while (isExists && isNotExpiredTime) {
+            try {
+                driver.findElement(By.id("edit-issue-submit"));
+                isExists = true;
+            } catch (NoSuchElementException e) {
+                System.out.println("NoSuchElementException thrown from waiting for edit issue submit button being not exist.");
+                isExists = false;
+                break;
+            } catch (StaleElementReferenceException e) {
+                System.out.println("StaleElementReferenceException thrown from waiting for edit issue submit button being not exist.");
+                isExists = false;
+                break;
+            }
+            if (endTime.isBefore(LocalTime.now())) {
+                isNotExpiredTime = false;
+                System.out.println("Waiting for the edit issue submit button being not exist ran out of set time limit.");
+            }
+        }
+    }
+
+    public void waitUntilEditIssueButtonIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(editIssueButton));
     }
 
     public void waitUntilMoreMenuButtonIssueIsClickable() {
@@ -215,6 +281,10 @@ public class JiraBrowsePage {
 
     public void clickOnTestCreatedSubtaskLinkByName() {
         testCreatedSubtaskLinkByName.click();
+    }
+
+    public void clickOnNonInputSurfaceIssueWindow(){
+        nonInputSurfaceIssueWindow.click();
     }
 
     public void navigateToProjectSummary(String url) {
