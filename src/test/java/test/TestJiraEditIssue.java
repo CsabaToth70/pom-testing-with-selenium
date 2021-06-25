@@ -3,6 +3,7 @@ package test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pagefactory.JiraBrowsePage;
@@ -11,7 +12,7 @@ import pagefactory.JiraDashboardPage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestJiraEditIssue {
     WebDriver driver;
@@ -68,9 +69,46 @@ public class TestJiraEditIssue {
             objBrowsePage.waitUntilIssueTypeFieldIsClickable();
             objBrowsePage.clickOnEditIssueSubmit();
         }
-
-
-
     }
+
+    @Test
+    void editCOALATest(){
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        driver.get("https://jira-auto.codecool.metastage.net/browse/COALA-18");
+        try {
+            assertTrue(objBrowsePage.isDisplayedEditIssueButton());
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            fail("No permission to edit issue in this project");
+        }
+    }
+
+    @Test
+    void editTOUCANTest(){
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        driver.get("https://jira-auto.codecool.metastage.net/browse/TOUCAN-14");
+        try {
+            assertTrue(objBrowsePage.isDisplayedEditIssueButton());
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            fail("No permission to edit issue in this project");
+        }
+    }
+
+    @Test
+    void editJETITest(){
+        objDashboardPage = new JiraDashboardPage(driver);
+        objBrowsePage = new JiraBrowsePage(driver);
+        objDashboardPage.waitUntilYourCompanyJiraTitleClickable();
+        driver.get("https://jira-auto.codecool.metastage.net/browse/JETI-6");
+        try {
+            assertTrue(objBrowsePage.isDisplayedEditIssueButton());
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            fail("No permission to edit issue in this project");
+        }
+    }
+
 
 }
