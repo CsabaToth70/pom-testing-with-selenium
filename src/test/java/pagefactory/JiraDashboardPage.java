@@ -67,6 +67,12 @@ public class JiraDashboardPage {
     @FindBy(id="user-options")
     WebElement navbarLoginBtn;
 
+    @FindBy(id = "browse_link")
+    WebElement projectsNavbarDropdown;
+
+    @FindBy(id = "project_view_all_link_lnk")
+    WebElement viewAllProjectsLink;
+
     public JiraDashboardPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -158,11 +164,16 @@ public class JiraDashboardPage {
         cancelButton.click();
     }
 
+    public void waitUntilProjectsNavbarIsClickable() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(projectsNavbarDropdown));
+    }
 
+    public void clickOnProjectsNavbarDropdown() {
+        projectsNavbarDropdown.click();
+    }
 
-
-
-
-
-
+    public void clickOnViewAllProjectsLink() {
+        viewAllProjectsLink.click();
+    }
 }
