@@ -140,56 +140,16 @@ public class JiraDashboardPage {
 
     }
 
-    public void waitForIssueTypeFieldToNotExist() {
-        Boolean isExists = true;
-        Boolean isNotExpiredTime = true;
-        int waitedSeconds = 5;
-        LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
-        while (isExists && isNotExpiredTime) {
-            try {
-                driver.findElement(By.id("issuetype-field"));
-            } catch (NoSuchElementException e) {
-                System.out.println("NoSuchElementException thrown from waiting for issue field being not exist.");
-                waitUntilIssueFieldClickable();
-                isExists = false;
-                break;
-            } catch (StaleElementReferenceException e) {
-                System.out.println("StaleElementReferenceException thrown from waiting for issue field being not exist.");
-                waitUntilIssueFieldClickable();
-                isExists = false;
-                break;
-            }
-            if (endTime.isBefore(LocalTime.now())) {
-                isNotExpiredTime = false;
-                System.out.println("Waiting for the issue field being not exist ran out of set time limit.");
-            }
-        }
+    public void waitUntilIssueTypeFieldToNotExist(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(issueField));
+        wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("issuetype-field"))));
     }
 
-    public void waitForSummaryTypeFieldToNotExist() {
-        Boolean isExists = true;
-        Boolean isNotExpiredTime = true;
-        int waitedSeconds = 5;
-        LocalTime endTime = LocalTime.now().plusSeconds(waitedSeconds);
-        while (isExists && isNotExpiredTime) {
-            try {
-                driver.findElement(By.id("summary"));
-            } catch (NoSuchElementException e) {
-                System.out.println("NoSuchElementException thrown from waiting for summary field being not exist.");
-                waitUntilSummaryFieldClickable();
-                isExists = false;
-                break;
-            } catch (StaleElementReferenceException e) {
-                System.out.println("StaleElementReferenceException thrown from waiting for summary field being not exist.");
-                waitUntilSummaryFieldClickable();
-                isExists = false;
-                break;
-            }
-            if (endTime.isBefore(LocalTime.now())) {
-                isNotExpiredTime = false;
-                System.out.println("Waiting for the summary field being not exist ran out of set time limit.");
-            }
-        }
+    public void waitUntilSummaryTypeFieldToNotExist(){
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(summaryField));
+        wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("summary"))));
     }
 
     public void clickOnNavbarLoginBtn() {navbarLoginBtn.click();}

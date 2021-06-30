@@ -70,7 +70,8 @@ public class TestingHelper {
         objDashboardPage.setProjectFieldContent(projectName);
 
         try {
-            objDashboardPage.waitForIssueTypeFieldToNotExist();
+            objDashboardPage.waitUntilIssueTypeFieldToNotExist();
+            objDashboardPage.waitUntilIssueFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
@@ -82,7 +83,8 @@ public class TestingHelper {
         objDashboardPage.pressEnterInIssueField();
 
         try {
-            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }

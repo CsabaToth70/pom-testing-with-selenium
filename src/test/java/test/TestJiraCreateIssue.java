@@ -47,7 +47,8 @@ public class TestJiraCreateIssue {
         objDashboardPage.setProjectFieldContent(projectName);
 
         try {
-            objDashboardPage.waitForIssueTypeFieldToNotExist();
+            objDashboardPage.waitUntilIssueTypeFieldToNotExist();
+            objDashboardPage.waitUntilIssueFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
@@ -59,7 +60,8 @@ public class TestJiraCreateIssue {
         objDashboardPage.pressEnterInIssueField();
 
         try {
-            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
@@ -112,7 +114,8 @@ public class TestJiraCreateIssue {
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent("noname");
         try {
-            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
@@ -134,7 +137,8 @@ public class TestJiraCreateIssue {
         objDashboardPage.setProjectFieldContent(projectName);
 
         try {
-            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
@@ -158,7 +162,8 @@ public class TestJiraCreateIssue {
         objDashboardPage.setProjectFieldContent(projectName);
 
         try {
-            objDashboardPage.waitForSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
+            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
         }
