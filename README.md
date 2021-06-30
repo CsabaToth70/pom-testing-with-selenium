@@ -18,17 +18,20 @@ Based on the test suite runs, some fine-tune aimed modification was reasoned on 
 
 We aimed to write and run POM based automation test for the Jira functions mentioned above.
 
+![](Jira.png)
 
 ## Applied technologies
 
-Project SDK: java 11 version 11.09
-Project language level: 16 Records, patterns
-Applied browser: Google Chrome Version:  91.0.4472.106 (64 bit)
-Applied WebDriver: chromedriver
-Framework: Selenium with Page Object Model
-Data resources format: .csv
-Applied IDE: IntelliJ IDEA
+Project SDK: java 11 version 11.09<br>
+Project language level: 16 Records, patterns<br>
+Applied browser: Google Chrome Version:  91.0.4472.106 (64 bit)<br>
+Applied WebDriver: chromedriver<br>
+Framework: Selenium with Page Object Model<br>
+Data resources format: .csv<br>
+Applied IDE: IntelliJ IDEA<br>
 
+![](java.png)
+![](selenium.png)
 
 ## Technical information and set up
 
