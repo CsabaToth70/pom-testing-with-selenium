@@ -59,6 +59,7 @@ public class TestingHelper {
             objDashboardPage.clickOnSummaryField();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at summary field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
 
     }
@@ -71,10 +72,11 @@ public class TestingHelper {
 
         try {
             objDashboardPage.waitUntilIssueTypeFieldToNotExist();
-            objDashboardPage.waitUntilIssueFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilIssueFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilIssueFieldClickable();
         objDashboardPage.clickOnIssueField();
@@ -84,10 +86,11 @@ public class TestingHelper {
 
         try {
             objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
-            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();

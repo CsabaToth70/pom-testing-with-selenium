@@ -141,13 +141,13 @@ public class JiraDashboardPage {
     }
 
     public void waitUntilIssueTypeFieldToNotExist(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.elementToBeClickable(issueField));
         wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("issuetype-field"))));
     }
 
     public void waitUntilSummaryTypeFieldToNotExist(){
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.elementToBeClickable(summaryField));
         wait.until(ExpectedConditions.not(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("summary"))));
     }

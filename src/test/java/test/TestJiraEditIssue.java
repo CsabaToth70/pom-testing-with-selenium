@@ -57,6 +57,7 @@ public class TestJiraEditIssue {
         try{
             assertEquals(modifiedIssueName, objBrowsePage.getIssueSummaryValue());
         } catch (Exception e){
+            System.out.println(e + ": " + e.getMessage());
         } finally {
             objBrowsePage.waitUntilIssueNameIsVisible();
             objBrowsePage.waitUntilEditIssueButtonIsClickable();

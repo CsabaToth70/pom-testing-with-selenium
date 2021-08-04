@@ -44,6 +44,7 @@ public class TestBrowseIssue {
             actualKey = objBrowsePage.getIssueIdentifierText();
         } catch (NoSuchElementException e) {
             System.out.println("No permission to view this issue");
+            System.out.println(e + ": " + e.getMessage());
         }
         assertEquals(key, actualKey);
     }

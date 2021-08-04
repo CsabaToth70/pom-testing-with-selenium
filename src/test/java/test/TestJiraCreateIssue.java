@@ -1,6 +1,5 @@
 package test;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +11,7 @@ import pagefactory.JiraEmptyPage;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestJiraCreateIssue {
     WebDriver driver;
@@ -45,13 +43,14 @@ public class TestJiraCreateIssue {
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
-
-        try {
+        objDashboardPage.pressEnterInProjectField();
+        try{
             objDashboardPage.waitUntilIssueTypeFieldToNotExist();
-            objDashboardPage.waitUntilIssueFieldClickable();
-        } catch (Exception e) {
+        } catch (Exception e){
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilIssueFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilIssueFieldClickable();
         objDashboardPage.clickOnIssueField();
@@ -61,10 +60,11 @@ public class TestJiraCreateIssue {
 
         try {
             objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
-            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -110,15 +110,16 @@ public class TestJiraCreateIssue {
         objDashboardPage = new JiraDashboardPage(driver);
         String projectName = "Main Testing Project (MTP)";
         TestingHelper.createIssueInAProjectOf(projectName, objDashboardPage);
-        // wait project field - skipped step here
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent("noname");
+        objDashboardPage.pressEnterInProjectField();
         try {
             objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
-            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -135,13 +136,15 @@ public class TestJiraCreateIssue {
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
+        objDashboardPage.pressEnterInProjectField();
 
         try {
             objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
-            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -160,13 +163,14 @@ public class TestJiraCreateIssue {
         objDashboardPage.waitUntilCreateIssueWindowClickable();
         objDashboardPage.clickOnProjectField();
         objDashboardPage.setProjectFieldContent(projectName);
-
+        objDashboardPage.pressEnterInProjectField();
         try {
             objDashboardPage.waitUntilSummaryTypeFieldToNotExist();
-            objDashboardPage.waitUntilSummaryFieldClickable();
         } catch (Exception e) {
             System.out.println("Timeout error thrown at issue field wait.");
+            System.out.println(e + ": " + e.getMessage());
         }
+        objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnNonInputSurfaceOfThePage();
         objDashboardPage.waitUntilSummaryFieldClickable();
         objDashboardPage.clickOnSummaryField();
@@ -193,7 +197,7 @@ public class TestJiraCreateIssue {
             objBrowsePage.clickOnCreateSubtaskOption();
         } catch (org.openqa.selenium.NoSuchElementException e) {
             TestingHelper.deleteTestIssue(objDashboardPage, objBrowsePage, serialNumberOfCreatedTestIssue);
-            Assert.fail("creation sub-task is not available from the concerned issue of project");
+            fail("creation sub-task is not available from the concerned issue of project");
         }
         objBrowsePage.waitUntilSummaryFieldOfPopupWindowIsClickable();
         objBrowsePage.clickOnSummaryField();
@@ -224,7 +228,7 @@ public class TestJiraCreateIssue {
         try {
             objBrowsePage.clickOnCreateSubtaskOption();
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            Assert.fail("creation sub-task is not available from the concerned issue of project");
+            fail("creation sub-task is not available from the concerned issue of project");
         }
     }
 
@@ -245,7 +249,7 @@ public class TestJiraCreateIssue {
         try {
             objBrowsePage.clickOnCreateSubtaskOption();
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            Assert.fail("creation sub-task is not available from the concerned issue of project");
+            fail("creation sub-task is not available from the concerned issue of project");
         }
     }
 
@@ -266,7 +270,7 @@ public class TestJiraCreateIssue {
         try {
             objBrowsePage.clickOnCreateSubtaskOption();
         } catch (org.openqa.selenium.NoSuchElementException e) {
-            Assert.fail("creation sub-task is not available from the concerned issue of project");
+            fail("creation sub-task is not available from the concerned issue of project");
         }
     }
 }
